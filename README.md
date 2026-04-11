@@ -19,7 +19,7 @@
 ---
 
 <p align="center">
-  <img src="screenshots/ember-dark.jpg" alt="Ember Dark" width="800" />
+  <img src="screenshots/ember-variants.png" alt="Ember — Dark, Soft, and Light variants" width="800" />
 </p>
 
 ## Philosophy
@@ -39,6 +39,25 @@ Eight muted accents sit in a narrow CIELAB L\*52–58 band, balanced to equal pe
 | Variants | 3 (dark, soft, light) |
 | Hue spread | Narrow (~90°), all warm |
 | Saturation | Ultra-muted except coral hero |
+
+### Design Rationale
+
+Ember is hand-tuned in **CIELAB perceptual color space** — not generated from an HSL palette picker. CIELAB models how humans actually see color: if two colors differ by the same numeric amount in Lab, they *look* equally different. RGB and HSL don't have this property, which is why many themes have accents that unintentionally shout over others.
+
+**Perceptual balance.** All eight accents are normalized to a flat L\*52–58 lightness band. No single color screams louder than the rest. The "squint test" holds: blur your eyes and every accent recedes equally — except coral.
+
+**Monochrome hero strategy.** Where themes like Gruvbox give you seven vivid accents at similar saturation, Ember inverts the approach: seven *muted* earth tones plus one *vivid* coral (S55%). This creates a natural focal hierarchy — your eye goes straight to what matters.
+
+**Warm graphite, not brown.** Ember lives close to Gruvbox's territory but at dramatically lower saturation. Background saturation stays at S6% — enough to feel warm, low enough to stay out of the way. The background is the ash, not the ember.
+
+**Built for long sessions.** The 8.5:1 contrast ratio sits in the ergonomic sweet spot (7–10:1) — high enough for readability, low enough to avoid eye strain over hours. Foreground is warm ivory, never pure white.
+
+| | Gruvbox | Ember |
+|---|---------|-------|
+| Character | Retro, warm, vivid | Warm, minimal, focused |
+| Hero accent | None (even saturation) | Coral (monochrome hero) |
+| Accent count | 7 (all vivid) | 8 (1 vivid, 7 muted) |
+| BG saturation | ~15% | ~6% |
 
 ## Three Flavors
 

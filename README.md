@@ -79,11 +79,6 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 
 Want to build a port? Use [`palette.json`](palette.json) as your source of truth and open an issue.
 
-## Design Resources
-
-- [`palette.json`](palette.json) — machine-readable color definitions
-- [`docs/COLOR-THEORY.org`](docs/COLOR-THEORY.org) — color theory and design philosophy behind Ember
-
 ## License
 
 MIT — Hossam Saraya

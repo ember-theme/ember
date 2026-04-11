@@ -5,3 +5,6 @@ site/
 # Editor
 .claude/
 *.bk
+
+soc.md
+soc.org

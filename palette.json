@@ -1,0 +1,45 @@
+{
+  "$schema": "https://github.com/ember-theme/ember/blob/main/palette.schema.json",
+  "name": "Ember",
+  "description": "A warm, monochrome color theme. One vivid coral spark in a sea of warm graphite.",
+  "variants": {
+    "ember": {
+      "name": "Ember",
+      "type": "dark",
+      "background": { "hex": "#1c1b19", "hsl": [45, 6, 10] },
+      "foreground": { "hex": "#d8d0c0", "hsl": [42, 16, 82] }
+    },
+    "ember-soft": {
+      "name": "Ember Soft",
+      "type": "dark",
+      "background": { "hex": "#242320", "hsl": [42, 4, 13] },
+      "foreground": { "hex": "#d8d0c0", "hsl": [42, 16, 82] }
+    },
+    "ember-light": {
+      "name": "Ember Light",
+      "type": "light",
+      "background": { "hex": "#e6dac4", "hsl": [38, 24, 86] },
+      "foreground": { "hex": "#282418", "hsl": [38, 20, 14] }
+    }
+  },
+  "accents": {
+    "coral":  { "hex": "#e08060", "role": "Hero accent — keywords, cursor, links", "hsl": [18, 55, 63] },
+    "orange": { "hex": "#c09058", "role": "Constants, properties", "hsl": [30, 42, 55] },
+    "gold":   { "hex": "#c8b468", "role": "Functions, types", "hsl": [45, 42, 60] },
+    "olive":  { "hex": "#8a9868", "role": "Strings", "hsl": [78, 22, 50] },
+    "sage":   { "hex": "#80a090", "role": "Methods", "hsl": [150, 14, 56] },
+    "steel":  { "hex": "#7890a0", "role": "Muted blue", "hsl": [205, 18, 55] },
+    "rose":   { "hex": "#b07878", "role": "Dusty rose", "hsl": [0, 25, 58] },
+    "mauve":  { "hex": "#988090", "role": "Faint violet", "hsl": [315, 12, 55] }
+  },
+  "accents_light": {
+    "coral":  { "hex": "#b84c30", "role": "Hero accent — keywords, cursor, links", "hsl": [14, 60, 45] },
+    "orange": { "hex": "#946030", "role": "Constants, properties", "hsl": [28, 52, 38] },
+    "gold":   { "hex": "#7a6820", "role": "Functions, types", "hsl": [48, 60, 30] },
+    "olive":  { "hex": "#4a6830", "role": "Strings", "hsl": [90, 36, 30] },
+    "sage":   { "hex": "#386858", "role": "Methods", "hsl": [150, 30, 31] },
+    "steel":  { "hex": "#3a6080", "role": "Muted blue", "hsl": [205, 36, 36] },
+    "rose":   { "hex": "#905050", "role": "Dusty rose", "hsl": [0, 30, 44] },
+    "mauve":  { "hex": "#706070", "role": "Faint violet", "hsl": [280, 10, 40] }
+  }
+}

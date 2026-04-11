@@ -1,0 +1,7 @@
+# Sub-repos
+emacs/
+site/
+
+# Editor
+.claude/
+*.bk

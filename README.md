@@ -82,8 +82,7 @@ Want to build a port? Use [`palette.json`](palette.json) as your source of truth
 ## Design Resources
 
 - [`palette.json`](palette.json) — machine-readable color definitions
-- [`docs/COLOR-THEORY.org`](docs/COLOR-THEORY.org) — lessons from analyzing Everforest, Solarized, Nord, Catppuccin, Gruvbox
-- [`docs/THEME-FRAMEWORK.org`](docs/THEME-FRAMEWORK.org) — 13-parameter design system for building balanced themes
+- [`docs/COLOR-THEORY.org`](docs/COLOR-THEORY.org) — color theory and design philosophy behind Ember
 
 ## License
 

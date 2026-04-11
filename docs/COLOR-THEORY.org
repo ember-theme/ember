@@ -2,7 +2,8 @@
 #+author: Hossam Saraya
 #+property: header-args :tangle no
 
-Lessons from analyzing Everforest, Solarized, Nord, Catppuccin, and Gruvbox.
+Lessons from analyzing Everforest, Solarized, Nord, Catppuccin, and Gruvbox —
+and how Ember applies them.
 
 * Rule 1: Background Tint = Theme Identity
 
@@ -15,8 +16,12 @@ Every great theme tints the background toward one hue. Pure neutral grey is blan
 | Nord        | =#2e3440= | H220  | blue-grey, arctic  |
 | Catppuccin  | =#1e1e2e= | H240  | purple-blue, warm  |
 | Gruvbox     | =#282828= | H30   | warm brown, retro  |
+| *Ember*     | =#1c1b19= | H40   | warm graphite      |
 
 *Takeaway:* Pick a hue. Tint everything toward it. The hue IS the theme.
+
+Ember chose warm graphite — a subtle yellow-brown tint (H40) at very low
+saturation. The warmth is felt, not seen.
 
 * Rule 2: Foreground is Never Pure White
 
@@ -30,9 +35,13 @@ causes eye strain on dark backgrounds.
 | Nord       | =#d8dee9= | 87%       | cool blue   |
 | Catppuccin | =#cdd6f4= | 88%       | lavender    |
 | Gruvbox    | =#ebdbb2= | 81%       | cream       |
+| *Ember*    | =#d8d0c0= | 80%       | warm ivory  |
 
 *Target:* FG lightness 58-88%, tinted toward the theme's hue.
 Solarized is notably dim (58%) — this is intentional for low contrast.
+
+Ember's ivory foreground (#d8d0c0) matches the warm graphite background,
+creating a cohesive temperature throughout.
 
 * Rule 3: Equal Perceptual Brightness Across Accents
 
@@ -47,6 +56,10 @@ Why this matters:
 
 *Target:* All accents at CIELAB L*45-60 for dark themes.
 
+Ember places its 8 muted accents in a tight L*52-58 band. Then coral (#e08060)
+sits at S55% — the single saturated hero that breaks the calm. This is
+intentional: one ember in the ash.
+
 How to verify: convert each accent to CIELAB and check the L* values.
 Online tool: https://colorjs.io/apps/convert/
 
@@ -59,6 +72,7 @@ Online tool: https://colorjs.io/apps/convert/
 | Nord        | 25-40%                    | Very muted, pastel    |
 | Catppuccin  | 50-70%                    | Pastel (high L + mod S) |
 | Gruvbox     | 60-80%                    | High sat, warm-shifted |
+| *Ember*     | 20-35%                    | Ultra-muted except coral |
 
 Two strategies for avoiding harshness:
 1. *Low saturation* (Everforest, Nord) — colors are muted/dusty
@@ -66,6 +80,10 @@ Two strategies for avoiding harshness:
 3. *High saturation + high lightness* (Catppuccin) — pastel effect
 
 Avoid: high saturation + high lightness + dark background = neon, eye strain.
+
+Ember takes strategy 1 to an extreme: all accents are ultra-muted (S20-35%),
+then a single accent (coral) breaks through at S55%. This "monochrome hero"
+approach creates focus without visual fatigue.
 
 *Target:* Saturation under 60%, or compensate with adjusted lightness.
 
@@ -76,11 +94,12 @@ This ramp is used for UI layering (popups, modeline, hl-line, etc.).
 
 | Theme      | Steps | Range                               |
 |------------+-------+-------------------------------------|
-| Catppuccin | 13    | Crust → Mantle → Base → Surface → Overlay → Subtext → Text |
-| Gruvbox    | 8     | bg → bg1-4 → fg4-1 → fg            |
-| Solarized  | 8     | base03 → base02 → ... → base3      |
+| Catppuccin | 13    | Crust -> Mantle -> Base -> Surface -> Overlay -> Subtext -> Text |
+| Gruvbox    | 8     | bg -> bg1-4 -> fg4-1 -> fg            |
+| Solarized  | 8     | base03 -> base02 -> ... -> base3      |
 | Nord       | 7     | nord0-3 (dark) + nord4-6 (light)    |
-| Everforest | 8     | bg_dim → bg → bg1-5 → fg           |
+| Everforest | 8     | bg_dim -> bg -> bg1-5 -> fg           |
+| *Ember*    | 11    | base0-8 + fg + fg-alt               |
 
 More steps = smoother layering, fewer visible jumps between UI elements.
 
@@ -92,11 +111,16 @@ More steps = smoother layering, fewer visible jumps between UI elements.
 |------------+--------------+--------------|
 | Solarized  | ~7:1         | low, relaxed |
 | Everforest | ~8:1         | comfortable  |
+| *Ember*    | ~8.5:1       | comfortable  |
 | Nord       | ~9:1         | moderate     |
 | Catppuccin | ~10:1        | moderate     |
 | Gruvbox    | ~11:1        | crisp        |
 
 WCAG AA requires 4.5:1 minimum. Most editors aim for 7-11:1.
+
+Ember targets 8.5:1 — comfortable for long coding sessions while meeting
+WCAG AA. The Ember Soft variant reduces this slightly; Ember Light maintains
+the same ratio with inverted polarity.
 
 *Target:* 7-10:1 for comfortable long-session reading.
 Pure black bg (#000000) with bright fg pushes ratio to 12:1+ — harsh.
@@ -106,9 +130,14 @@ Pure black bg (#000000) with bright fg pushes ratio to 12:1+ — harsh.
 - *Warm:* Gruvbox, Everforest (browns, tans, olive greens)
 - *Cool:* Nord, Solarized (blues, teals, blue-greys)
 - *Mixed warm:* Catppuccin (purple base + pastel accents)
+- *All-warm:* Ember (warm graphite bg + warm ivory fg + warm accents)
 
 *Rule:* Don't mix warm and cool randomly. Your accent hue range should
-span ~120° of the color wheel, not 360°.
+span ~120 degrees of the color wheel, not 360 degrees.
+
+Ember commits fully to warmth. The accent hues span roughly 90 degrees
+(olive at H80 through rose at H0), all clustered in the warm quadrant.
+Even the coolest accent (steel at H205) has a muted, warm character.
 
 ** Hue Distribution Examples
 
@@ -122,7 +151,47 @@ the magenta/violet range almost entirely.
 Gruvbox accents all shift warm — even the "blue" (#83a598) has a teal/green
 tint, not a pure blue.
 
-* Rule 8: Reference Palettes
+Ember's accents span ~90 degrees in the warm range, creating a cohesive
+"embers and ash" palette where every color feels like it belongs to the
+same fire.
+
+* Applying These Rules: Ember's Design Decisions
+
+** The "One Ember in the Ash" Principle
+
+Most themes distribute saturation evenly across accents. Ember does the
+opposite: eight accents at ultra-low saturation (S20-35%) plus one hero
+(coral #e08060 at S55%) that cuts through like a match struck in the dark.
+
+This gives Ember its distinctive character:
+- Keywords glow in coral — bold, assertive, warm
+- Functions shimmer in gold — the second brightest but still muted
+- Strings sit in olive — natural, organic
+- Everything else recedes into the warm graphite
+
+** Three Variants, One Soul
+
+| Variant      | Background | L%  | Description              |
+|--------------+-----------+-----+--------------------------|
+| *Ember*      | =#1c1b19= | 10% | Dark graphite — the default |
+| *Ember Soft* | =#242320= | 13% | Lifted graphite, softer contrast |
+| *Ember Light*| =#e6dac4= | 86% | Warm ivory, darkened accents |
+
+The light variant doesn't just invert — it darkens all accents to maintain
+the same contrast ratios and perceptual hierarchy. The coral hero becomes
+a deeper terra cotta (#b84c30) that still leads the eye.
+
+** Semantic Mapping: Coral Keywords
+
+Ember maps coral to keywords — the most frequently occurring syntax element.
+This makes coral the heartbeat of the theme: every =if=, =def=, =return=,
+=import= pulses with the hero accent. Functions get gold (semibold), types
+get gold (bold italic), and strings get olive.
+
+The mapping is intentional: warm color on keywords feels bold and assertive;
+cool color would feel technical and precise. Ember chose warmth.
+
+* Reference Palettes
 
 ** Everforest Dark (the gold standard for eye comfort)
 #+begin_example
@@ -174,19 +243,157 @@ blue:    #83a598    cyan:   #8ec07c
 purple:  #d3869b
 #+end_example
 
-* Applying to Our Themes
+** Ember Dark
+#+begin_example
+bg:      #1c1b19    fg:     #d8d0c0
+bg-alt:  #222120    fg-alt: #908a7e
+coral:   #e08060    orange: #c09058
+gold:    #c8b468    olive:  #8a9868
+sage:    #80a090    steel:  #7890a0
+rose:    #b07878    mauve:  #988090
+#+end_example
 
-** Matrix-Black Issues
-1. Accent saturation too high (70-90%) — should be 40-60%
-2. Pure black bg is a style choice but pushes contrast to 12:1+
-3. Accent luminance is uneven — green/cyan dominate visually
-4. Foreground is OK (#b8ddb0, L78%) but could be warmer
+* Designing New Themes: A Reproducible Process
 
-** Suggested Approach for New Palettes
-1. Pick a hue identity (green for matrix, teal for reef, rose for blossom)
-2. Build the bg ramp: 8+ stops all at that hue, S10-25%, L2-80%
-3. Set fg at the same hue, S20-40%, L75-85%
-4. Choose accents: convert each to CIELAB, adjust until L* values match
-5. Test: open a real codebase and squint — if one color jumps out, it's
-   too bright or too saturated relative to the others
-6. Test in org-agenda, mu4e, magit — not just code buffers
+If you want to create your own theme using these principles, here is a
+7-step process.
+
+** Step 1: Seed Palette
+
+Start at [[https://coolors.co][coolors.co]] or similar tool. Generate or curate a 4-6 color palette
+that *feels* right. Don't overthink it — this is raw inspiration.
+
+What you're looking for:
+- A color that could be the *hero accent* (the personality of the theme)
+- A dark color that hints at the *background hue*
+- A muted/neutral that could inform *foreground warmth*
+- 1-2 colors that create *tension or harmony* with the hero
+
+*Output:* 4-6 hex colors + their names/feelings.
+
+** Step 2: Extract Design Parameters
+
+Every theme is defined by a combination of parameters. The more parameters
+you push to unusual values, the more distinctive (and potentially polarizing)
+the result.
+
+*** Identity Hue (from seed palette)
+
+Pick the hue that will tint your background ramp.
+
+| Hue Range | Character                           | Examples         |
+|-----------+-------------------------------------+------------------|
+| H0-30     | Warm brown/rust                     | Gruvbox          |
+| H30-60    | Gold/amber                          | Ember            |
+| H100-150  | Green/forest                        | Everforest       |
+| H150-180  | Teal/cyan                           | —                |
+| H190-210  | Ocean blue                          | Solarized        |
+| H220-250  | Indigo/navy                         | Nord             |
+| H250-280  | Purple/violet                       | Catppuccin       |
+
+*** Temperature Strategy
+
+| Strategy        | Description                           | Example           |
+|-----------------+---------------------------------------+-------------------|
+| All-warm        | Warm bg + warm accents                | Gruvbox, Ember    |
+| All-cool        | Cool bg + cool accents                | Nord, Solarized   |
+| Warm-on-cool    | Cool bg + warm hero accents (glow)    | —                 |
+| Cool-on-warm    | Warm bg + cool hero accents (calm)    | rare              |
+
+Warm-on-cool creates the most visual *tension* — warm accents "glow" against
+cool backgrounds. Ember takes the all-warm approach for cohesion.
+
+*** Saturation Strategy
+
+| Strategy          | Accent S% | Feel                 | Example              |
+|-------------------+-----------+----------------------+----------------------|
+| Ultra-muted       | 15-25%    | Zen, minimal         | —                    |
+| Muted/natural     | 28-42%    | Comfortable, earthy  | Everforest           |
+| Moderate          | 38-55%    | Balanced, versatile  | —                    |
+| Vivid-dark        | 55-75%    | Bold but controlled  | Solarized, Gruvbox   |
+| Pastel            | 50-70%+   | Bright, playful      | Catppuccin           |
+| Monochrome hero   | 20-35% + one at 55% | Focused, dramatic | Ember          |
+
+*** CIELAB Lightness Target
+
+| Target L*  | Feel                                | Contrast with dark bg |
+|------------+-------------------------------------+-----------------------|
+| L*40-48    | Dark, subdued, elegant              | Low — subtle tokens   |
+| L*48-55    | Balanced, Solarized-like            | Medium — comfortable  |
+| L*55-62    | Bright, clear, Everforest-like      | High — crisp tokens   |
+| L*65-80    | Pastel, airy, Catppuccin-like       | Very high — floaty    |
+
+*The band width matters as much as the target.* Keep all accents within 5-8
+L* units of each other.
+
+*** Hue Spread (accent diversity)
+
+| Spread       | Degrees | Character                    | Example        |
+|--------------+---------+------------------------------+----------------|
+| Monochrome   | ~30 deg | Single-hue variations        | —              |
+| Analogous    | ~90 deg | Adjacent hues, very cohesive | Ember          |
+| Triadic      | ~180 deg| Three zones, balanced        | —              |
+| Full wheel   | ~300+   | All hues present             | Nord, Catppuccin |
+
+** Step 3: Build the Background Ramp
+
+Take the identity hue and build 11 stops:
+
+1. Start with bg at your identity hue, S10-12%, L8-10%
+2. Step through to base8 at the same hue, S10-12%, L76-80%
+3. Increase lightness by ~3-8% per step
+4. Keep saturation flat (S8-15%) across the ramp
+5. fg and fg-alt can break the hue rule for warmth
+
+*NEVER use a seed palette color directly as bg.* Extract only the hue.
+
+** Step 4: Adapt Seed Colors to Accent Slots
+
+1. *Identify roles:* Which seed color maps to which accent slot?
+2. *Normalize L*:* Convert to CIELAB and adjust until within your target band
+3. *Adjust saturation:* Pull all accents into your saturation range
+4. *Fill gaps:* Derive missing accents by shifting hue +/- 30 degrees
+5. *Verify:* No two accents within 20 degrees hue AND similar L*
+
+** Step 5: Choose Semantic Mappings
+
+| Choice                | Feel                           |
+|-----------------------+--------------------------------|
+| Warm keywords         | Bold, assertive (Ember)        |
+| Cool keywords         | Technical, precise             |
+| Bright functions      | Energetic, sparky              |
+| Muted functions       | Calm, professional             |
+
+Two themes with identical hex palettes but different semantic mappings will
+feel like completely different themes.
+
+** Step 6: Write the Theme
+
+Include ALL face overrides (~95+). The "minimal overrides" approach sounds
+elegant but produces themes that look broken when users open magit, dired,
+or completion popups and see colors from a different palette.
+
+** Step 7: Iterate Visually
+
+Load the theme and check:
+1. *Code buffer* (elisp, JS, Python) — is the token hierarchy clear?
+2. *Org file* — do headings, blocks, and TODO states look intentional?
+3. *Org agenda* — are dates, scheduled items, and deadlines distinguishable?
+4. *Magit* — do added/removed diffs use clear green/red?
+5. *Mu4e* — are unread/flagged/read emails visually distinct?
+6. *Completion popup* — does the current selection stand out?
+7. *Minibuffer* — is the prompt visible and the match highlighting clear?
+
+The squint test: unfocus your eyes and look at a code buffer. If one color
+jumps out, it's too bright or too saturated. Adjust its L* or S% until the
+buffer looks evenly lit.
+
+* Color Utilities
+
+Doom provides these transformation functions:
+
+- =(doom-darken COLOR AMOUNT)= — darken by 0.0-1.0
+- =(doom-lighten COLOR AMOUNT)= — lighten by 0.0-1.0
+- =(doom-blend COLOR1 COLOR2 AMOUNT)= — blend two colors (0.0 = COLOR2, 1.0 = COLOR1)
+
+Use these for derived colors to maintain consistency.

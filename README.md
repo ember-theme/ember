@@ -34,8 +34,8 @@ Eight muted accents sit in a narrow CIELAB L\*52–58 band, balanced to equal pe
 
 | Metric | Value |
 |--------|-------|
-| Contrast ratio | 11.2:1 |
-| Accessibility | WCAG AAA |
+| Contrast ratio | 11.2:1 (body text) |
+| Accessibility | WCAG AA |
 | Variants | 3 (dark, soft, light) |
 | Hue spread | Narrow (~90°), all warm |
 | Saturation | Ultra-muted except coral hero |
@@ -50,7 +50,7 @@ Ember is hand-tuned in **CIELAB perceptual color space** — not generated from 
 
 **Warm graphite, not brown.** Ember lives close to Gruvbox's territory but at dramatically lower saturation. Background saturation stays at S6% — enough to feel warm, low enough to stay out of the way. The background is the ash, not the ember.
 
-**Built for long sessions.** The 11.2:1 contrast ratio exceeds WCAG AAA (7:1) — high enough for readability, tuned with warm ivory to avoid eye strain over hours. Foreground is warm ivory, never pure white.
+**Built for long sessions.** Body text sits at 11.2:1 contrast, well above WCAG AAA. Accents are tuned for WCAG AA. Foreground is warm ivory, never pure white — readable without eye strain over long sessions. Foreground is warm ivory, never pure white.
 
 | | Gruvbox | Ember |
 |---|---------|-------|

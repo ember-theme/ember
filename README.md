@@ -34,8 +34,8 @@ Eight muted accents sit in a narrow CIELAB L\*52–58 band, balanced to equal pe
 
 | Metric | Value |
 |--------|-------|
-| Contrast ratio | 8.5:1 |
-| Accessibility | WCAG AA |
+| Contrast ratio | 11.2:1 |
+| Accessibility | WCAG AAA |
 | Variants | 3 (dark, soft, light) |
 | Hue spread | Narrow (~90°), all warm |
 | Saturation | Ultra-muted except coral hero |
@@ -46,11 +46,11 @@ Ember is hand-tuned in **CIELAB perceptual color space** — not generated from 
 
 **Perceptual balance.** All eight accents are normalized to a flat L\*52–58 lightness band. No single color screams louder than the rest. The "squint test" holds: blur your eyes and every accent recedes equally — except coral.
 
-**Monochrome hero strategy.** Where themes like Gruvbox give you seven vivid accents at similar saturation, Ember inverts the approach: seven *muted* earth tones plus one *vivid* coral (S55%). This creates a natural focal hierarchy — your eye goes straight to what matters.
+**Monochrome hero strategy.** Where themes like Gruvbox give you seven vivid accents at similar saturation, Ember inverts the approach: seven *muted* earth tones plus one *vivid* coral (S67%). This creates a natural focal hierarchy — your eye goes straight to what matters.
 
 **Warm graphite, not brown.** Ember lives close to Gruvbox's territory but at dramatically lower saturation. Background saturation stays at S6% — enough to feel warm, low enough to stay out of the way. The background is the ash, not the ember.
 
-**Built for long sessions.** The 8.5:1 contrast ratio sits in the ergonomic sweet spot (7–10:1) — high enough for readability, low enough to avoid eye strain over hours. Foreground is warm ivory, never pure white.
+**Built for long sessions.** The 11.2:1 contrast ratio exceeds WCAG AAA (7:1) — high enough for readability, tuned with warm ivory to avoid eye strain over hours. Foreground is warm ivory, never pure white.
 
 | | Gruvbox | Ember |
 |---|---------|-------|
@@ -65,7 +65,7 @@ Ember is hand-tuned in **CIELAB perceptual color space** — not generated from 
 |---------|-----------|-------------|
 | **Ember** | `#1c1b19` | Dark graphite, L10% — the default |
 | **Ember Soft** | `#242320` | Lifted graphite, L13% — softer contrast |
-| **Ember Light** | `#e6dac4` | Warm ivory, L86% — darkened accents for contrast |
+| **Ember Light** | `#e6dac4` | Warm ivory, L84% — darkened accents for contrast |
 
 <p align="center">
   <img src="screenshots/ember-light.jpg" alt="Ember Light" width="800" />

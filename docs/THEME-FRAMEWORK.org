@@ -1,0 +1,884 @@
+#+title: Doom Theme Framework
+#+author: Hossam Saraya
+#+property: header-args :tangle no
+
+* Overview
+
+This document defines the complete set of color variables and face overrides
+needed for a fully-styled Doom Emacs theme. Use this as a checklist when
+creating or auditing themes.
+
+All colors should be defined using *HSL values* in comments for systematic
+management. Use the format: =; Hhue Ssaturation% Llightness%=
+
+* Design Process — From Palette to Theme
+
+A reproducible 7-step flow for creating unique, ergonomic themes.
+
+** Step 1: Seed Palette (Coolors / inspiration)
+
+Start at [[https://coolors.co][coolors.co]] or similar tool. Generate or curate a 4-6 color palette
+that *feels* right. Don't overthink it — this is raw inspiration.
+
+What you're looking for:
+- A color that could be the *hero accent* (the personality of the theme)
+- A dark color that hints at the *background hue*
+- A muted/neutral that could inform *foreground warmth*
+- 1-2 colors that create *tension or harmony* with the hero
+
+Example: The lagoon seed was 5 colors from Coolors:
+=#FF6F59= (Vibrant Coral), =#254441= (Dark Slate Grey), =#43AA8B= (Seagrass),
+=#B2B09B= (Dry Sage), =#EF3054= (Watermelon)
+
+*Output:* 4-6 hex colors + their names/feelings.
+
+** Step 2: Extract the Design Parameters
+
+This is where uniqueness comes from. Every theme is defined by 7 parameters,
+and the *combination* of these parameters is what makes it distinct.
+
+*** Parameter 1: Identity Hue (from seed palette)
+
+Pick the hue that will tint your background ramp. Extract it from the darkest
+color in your seed palette.
+
+| Hue Range | Character                           | Examples         |
+|-----------+-------------------------------------+------------------|
+| H0-30     | Warm brown/rust                     | Gruvbox          |
+| H30-60    | Gold/amber                          | —                |
+| H100-150  | Green/forest                        | Everforest, Moss |
+| H150-180  | Teal/cyan                           | Reef, Lagoon     |
+| H190-210  | Ocean blue                          | Solarized        |
+| H220-250  | Indigo/navy                         | Nord, Tide       |
+| H250-280  | Purple/violet                       | Catppuccin       |
+| H280-320  | Magenta/plum                        | Spice            |
+| H320-360  | Rose/pink                           | Blossom          |
+
+*** Parameter 2: Temperature Strategy
+
+How warm vs cool is the overall feel?
+
+| Strategy        | Description                           | Example           |
+|-----------------+---------------------------------------+-------------------|
+| All-warm        | Warm bg + warm accents                | Gruvbox, Moss     |
+| All-cool        | Cool bg + cool accents                | Nord, Solarized   |
+| Warm-on-cool    | Cool bg + warm hero accents (glow)    | Lagoon, Tide      |
+| Cool-on-warm    | Warm bg + cool hero accents (calm)    | rare, experimental |
+
+Warm-on-cool creates the most visual *tension* — warm accents "glow" against
+cool backgrounds like bioluminescence in dark water.
+
+*** Parameter 3: Saturation Strategy
+
+| Strategy          | Accent S% | Feel                 | Example              |
+|-------------------+-----------+----------------------+----------------------|
+| Ultra-muted       | 15-25%    | Zen, minimal         | Reef-mist            |
+| Muted/natural     | 28-42%    | Comfortable, earthy  | Everforest, Moss     |
+| Moderate          | 38-55%    | Balanced, versatile  | Lagoon, Tide         |
+| Vivid-dark        | 55-75%    | Bold but controlled  | Solarized, Gruvbox   |
+| Pastel            | 50-70%+   | Bright, playful      | Catppuccin           |
+
+*Rule:* Higher saturation needs either lower L* (vivid-dark) or higher L*
+(pastel) to avoid neon harshness. Mid-L* + high-S = eye strain.
+
+*** Parameter 4: CIELAB Lightness Target
+
+Where your accent colors sit on the perceptual brightness scale.
+
+| Target L*  | Feel                                | Contrast with dark bg |
+|------------+-------------------------------------+-----------------------|
+| L*40-48    | Dark, subdued, elegant              | Low — subtle tokens   |
+| L*48-55    | Balanced, Solarized-like            | Medium — comfortable  |
+| L*55-62    | Bright, clear, Everforest-like      | High — crisp tokens   |
+| L*65-80    | Pastel, airy, Catppuccin-like       | Very high — floaty    |
+
+*The band width matters as much as the target.* Keep all accents within 5-8
+L* units of each other. Wider bands = visual imbalance.
+
+*** Parameter 5: Hue Spread (accent diversity)
+
+How much of the color wheel your accents cover.
+
+| Spread       | Degrees | Character                    | Example        |
+|--------------+---------+------------------------------+----------------|
+| Monochrome   | ~30°    | Single-hue variations        | Matrix (green) |
+| Analogous    | ~90°    | Adjacent hues, very cohesive | —              |
+| Triadic      | ~180°   | Three zones, balanced        | Lagoon (coral/teal/violet) |
+| Full wheel   | ~300°+  | All hues present             | Nord, Catppuccin |
+
+*Rule:* Full wheel spread requires low saturation (S<40%) to avoid looking
+like a Christmas tree. Narrower spreads can handle higher saturation.
+
+*** Parameter 6: Contrast Ratio (bg-to-fg)
+
+| Ratio  | Feel              | Who it's for           |
+|--------+-------------------+------------------------|
+| 7-8:1  | Relaxed, gentle   | Long sessions, low light |
+| 8-10:1 | Comfortable       | Most users, daily driver |
+| 10-12:1| Crisp, sharp      | Bright rooms, a11y needs |
+| 12:1+  | Extreme           | Style choice (pure black bg) |
+
+Determined by bg lightness + fg lightness. Pure black bg (#000000) + any
+readable fg = 12:1+ automatically.
+
+*** Parameter 7: Semantic Mapping (token → color assignment)
+
+This is the *most overlooked* parameter but arguably the most impactful for
+day-to-day feel. Which accent goes to which code token?
+
+| Choice                | Feel                           | Example     |
+|-----------------------+--------------------------------+-------------|
+| Green keywords        | Natural, organic               | Matrix, Moss |
+| Blue keywords         | Technical, precise             | Reef, Tide  |
+| Red/coral keywords    | Bold, assertive, warm          | Lagoon      |
+| Magenta functions     | Distinctive, unconventional    | Blossom     |
+| Orange functions      | Energetic, sparky              | Spice       |
+| Teal functions        | Calm, professional             | Lagoon, Moss |
+| Magenta types         | Warm structure (unusual)       | Lagoon, Tide |
+| Teal types            | Cool structure (standard)      | Most themes |
+
+Two themes with identical hex palettes but different semantic mappings will
+feel like completely different themes.
+
+** Step 3: Build the Background Ramp
+
+Take the identity hue from Step 2 and build 11 stops.
+
+Process:
+1. Start with bg at your identity hue, S10-12%, L8-10%
+2. Step through to base8 at the same hue, S10-12%, L76-80%
+3. Increase lightness by ~3-8% per step (larger jumps at the bright end)
+4. Keep saturation flat (S8-15%) across the entire ramp
+5. fg and fg-alt can break the hue rule for warmth (e.g., H42 tan fg on H170 teal bg)
+
+*NEVER use a seed palette color directly as bg.* Extract only the hue.
+Seed colors are designed for print/web at high saturation — as an editor bg,
+they'll make the entire screen feel like a fishbowl.
+
+** Step 4: Adapt Seed Colors to Accent Slots
+
+Take the 4-6 colors from your seed palette and adapt them:
+
+1. *Identify roles:* Which seed color maps to which accent slot? (hero → functions, warm → keywords, etc.)
+2. *Normalize L*:* Convert each to CIELAB and adjust until all are within your target band (5-8 unit range). Use https://colorjs.io/apps/convert/
+3. *Adjust saturation:* Pull all accents into your chosen saturation range
+4. *Fill gaps:* Your seed palette likely has 4-6 colors but you need 11 accent slots. Derive the missing ones by:
+   - Shifting hue ±30° from existing colors
+   - Creating dark variants (dark-blue, dark-cyan) at L*~40
+   - Keeping gap-fill colors at lower saturation so they don't compete with hero colors
+5. *Verify:* No two accents should be within 20° hue AND similar L* — they'll look identical in use
+
+** Step 5: Choose Semantic Mappings
+
+Map your adapted accents to code tokens. This is creative work — there's no
+formula, but there are principles:
+
+- *Hero accent* → the most visible token (usually functions or keywords)
+- *Secondary accent* → the second-most visible (keywords or types)
+- *Warm colors* → energetic tokens (keywords, numbers, warnings)
+- *Cool colors* → structural tokens (functions, types, methods)
+- *Muted colors* → background tokens (comments, operators, variables)
+- *error/warning/success* should use universally understood mappings
+  (red-ish errors, yellow-ish warnings, green-ish success) even if your
+  "red" is actually coral or your "green" is actually teal
+
+** Step 6: Write the Theme File
+
+Use the =create-doom-theme= skill or write manually following the template
+in this document. Include ALL [MUST OVERRIDE] face sections (~95+ overrides).
+
+** Step 7: Iterate Visually
+
+Load the theme and check these buffers (in order of importance):
+1. *Code buffer* (elisp, JS, Python) — is the token hierarchy clear?
+2. *Org file* — do headings, blocks, and TODO states look intentional?
+3. *Org agenda* — are dates, scheduled items, and deadlines distinguishable?
+4. *Magit* — do added/removed diffs use clear green/red?
+5. *Mu4e* — are unread/flagged/read emails visually distinct?
+6. *Completion popup* — does the current selection stand out?
+7. *Minibuffer* — is the prompt visible and the match highlighting clear?
+
+The squint test: unfocus your eyes and look at a code buffer. If one color
+jumps out, it's too bright or too saturated relative to the others. Adjust
+its L* or S% until the buffer looks evenly lit.
+
+*** Parameter 8: Border/Separator Contrast
+
+How visible are boundaries between UI regions?
+
+| Choice       | Value              | Feel                       | Example     |
+|--------------+--------------------+----------------------------+-------------|
+| Invisible    | base2-3 (≤3% L)   | Seamless, minimal          | —           |
+| Subtle       | base4 (~5% L gap)  | Visible but quiet          | Ember, Moss |
+| Pronounced   | base5-6 (~10% L)   | Industrial, technical      | —           |
+
+Affects: =vertical-bar=, modeline =:overline=, =corfu-border=, window dividers.
+
+*** Parameter 9: Depth Layering
+
+How many distinct bg levels are perceptible? The L% gap between bg/bg-alt/base2/base3.
+
+| Choice       | L% gap between layers | Feel                       | Example      |
+|--------------+-----------------------+----------------------------+--------------|
+| Flat         | <2% per step          | Clean, paper-like          | —            |
+| Shallow      | 3-4% per step         | Subtle structure           | Most themes  |
+| Deep         | 5-7% per step         | Rich, IDE-like, layered    | —            |
+
+Affects: =hl-line=, =org-block=, =tooltip=, solaire differentiation, popup contrast.
+
+*** Parameter 10: Typographic Voice
+
+How the theme uses weight and slant to create hierarchy.
+
+| Choice    | Keywords    | Functions  | Types         | Comments      | Example |
+|-----------+-------------+------------+---------------+---------------+---------|
+| Whisper   | normal      | normal     | italic        | italic        | —       |
+| Balanced  | bold        | semibold   | bold+italic   | italic        | Ember   |
+| Assertive | bold        | bold       | bold+italic   | italic        | Lagoon  |
+| Loud      | ultra-bold  | bold       | bold+italic   | bold+italic   | Matrix  |
+
+*** Parameter 11: Hero Count
+
+How many saturated accent colors vs muted/neutral ones.
+
+| Choice      | Saturated (>S30%) | Rest           | Feel                   | Example |
+|-------------+-------------------+----------------+------------------------+---------|
+| Monochrome  | 1                 | near-neutral   | Focused, dramatic      | Ember   |
+| Duochrome   | 2 (in tension)    | muted          | Dynamic, balanced      | Lagoon  |
+| Polychrome  | 3+                | even sat       | Rich, colorful         | Moss    |
+
+*** Parameter 12: Foreground Gap
+
+The L* distance from fg → fg-alt → comments → invisible. Controls information hierarchy.
+
+| Choice | fg L* | fg-alt L* | comments L* | Span | Feel                    |
+|--------+-------+-----------+-------------+------+-------------------------|
+| Tight  |   80  |      72   |          65 |  ~15 | Flat, everything legible |
+| Medium |   80  |      65   |          50 |  ~30 | Clear hierarchy          |
+| Wide   |   82  |      60   |          40 |  ~42 | Dramatic, comments fade  |
+
+*** Parameter 13: State Encoding
+
+How the theme communicates state changes (unread/read, TODO/DONE, modified/added).
+
+| Channel        | Examples                                  | Used by |
+|----------------+-------------------------------------------+---------|
+| Color-primary  | Different hues per state                  | Lagoon  |
+| Weight-primary | Same hue, bold/normal/light               | —       |
+| Mixed          | Color + italic + strikethrough + weight   | Ember   |
+| Decoration     | Underline, strikethrough, box             | —       |
+
+Best practice: use at least 2 channels per state change (e.g., color + weight for
+unread, color + strikethrough for DONE) so differences survive in peripheral vision.
+
+** Summary: The 13 Parameters of Uniqueness
+
+Every theme is a point in 13-dimensional space:
+
+| #  | Parameter            | Range                            |
+|----+----------------------+----------------------------------|
+| 1  | Identity Hue         | 0-360° of the color wheel        |
+| 2  | Temperature          | all-warm → warm-on-cool → all-cool |
+| 3  | Saturation           | ultra-muted (15%) → pastel (70%) |
+| 4  | CIELAB L* target     | dark (L*40) → pastel (L*80)      |
+| 5  | Hue spread           | monochrome (30°) → full (300°+)  |
+| 6  | Contrast ratio       | relaxed (7:1) → extreme (12:1+)  |
+| 7  | Semantic mapping     | which accent → which token       |
+| 8  | Border contrast      | invisible → subtle → pronounced  |
+| 9  | Depth layering       | flat → shallow → deep            |
+| 10 | Typographic voice    | whisper → balanced → loud        |
+| 11 | Hero count           | mono → duo → polychrome          |
+| 12 | Foreground gap       | tight (15 L*) → wide (42 L*)    |
+| 13 | State encoding       | color → weight → mixed → decoration |
+
+Two themes that differ in even 3-4 of these parameters will feel entirely
+different. The more parameters you push to unusual values, the more
+distinctive (and potentially polarizing) the result.
+
+*Safe combinations:* Muted sat + medium fg gap + balanced voice + subtle borders = comfortable
+*Bold combinations:* Warm-on-cool + duochrome heroes + wide fg gap + whisper voice = distinctive
+*Risky combinations:* High sat + loud voice + pronounced borders + polychrome = Christmas tree
+
+* Color System (HSL-based)
+
+Every theme needs these color groups. All values are HSL-derived hex codes.
+
+** 1. Background Ramp (11 stops)
+
+A gradient from darkest to lightest, all sharing the same *hue*.
+The hue defines the theme's overall tint.
+
+| Variable | Role                          | Typical L% (dark theme) |
+|----------+-------------------------------+-------------------------|
+| =bg=       | Main editor background        | 5-15%                   |
+| =bg-alt=   | Sidebar/alternate bg          | bg + 3-5%               |
+| =base0=    | Darkest (popup bg)            | 2-5%                    |
+| =base1=    | Near-black (modeline bg)      | 5-8%                    |
+| =base2=    | Dark (org block bg)           | 8-12%                   |
+| =base3=    | Hl-line / subtle highlight    | 12-16%                  |
+| =base4=    | Borders, vertical-bar, region | 18-25%                  |
+| =base5=    | Line numbers, faint text      | 28-35%                  |
+| =base6=    | Comments                      | 38-47%                  |
+| =base7=    | Doc comments, operators       | 48-60%                  |
+| =base8=    | Bright accent (near-fg)       | 70-80%                  |
+| =fg=       | Main foreground text          | 78-92%                  |
+| =fg-alt=   | Secondary text                | 65-75%                  |
+
+*** Critical: Background Saturation
+
+*BG saturation must be S8-15% for dark themes.* Higher saturation (S20%+)
+makes the entire editor look like colored soup — the tint overwhelms the
+content. The background hue should be a whisper, not a shout.
+
+Lesson from lagoon: #254441 (H170 S30% L16%) looked like a green fishbowl.
+Dropping to #101a18 (H168 S12% L8%) fixed it. Inspiration palettes are for
+accents; only extract the *hue* for backgrounds.
+
+| Saturation | Result                                        |
+|------------+-----------------------------------------------|
+| S5-8%      | Barely tinted, almost neutral (Nord-like)     |
+| S8-15%     | Sweet spot — tint visible but not distracting |
+| S15-25%    | Risky — works only if L% is very low (<8%)   |
+| S25%+      | Too much — background competes with content   |
+
+Exception: Solarized uses S100% at L13% — but Solarized is the only theme
+that pulls this off, and its fg is intentionally dim (L58%) to compensate.
+
+** 2. Accent Colors (12 slots)
+
+These provide syntax and UI color variety. Keep saturation/lightness
+consistent across the set for visual harmony.
+
+| Variable    | Typical Use            | Notes                          |
+|-------------+------------------------+--------------------------------|
+| =red=         | Errors, warnings       | Keep visible against bg        |
+| =orange=      | Numbers                | Warm accent                    |
+| =yellow=      | Strings, warnings      | Can lean green for mono themes |
+| =green=       | Keywords, success      | Primary syntax color           |
+| =blue=        | Keywords (alt), links  | Can map to teal for mono       |
+| =dark-blue=   | Subtle blue uses       |                                |
+| =teal=        | Types                  |                                |
+| =cyan=        | Functions, highlight   | Often the "hero" accent        |
+| =dark-cyan=   | Methods, subtle cyan   |                                |
+| =magenta=     | Properties             | Map to theme hue for mono      |
+| =violet=      | Constants              | Map to theme hue for mono      |
+
+*** Identity Through Semantic Mapping
+
+The "typical use" above is a default, not a law. *Reassigning accent roles
+to semantic mappings is the single most powerful way to give a theme identity.*
+
+Examples from our collection:
+- *matrix:* green for keywords, cyan for functions — monochrome CRT feel
+- *blossom:* magenta for functions — floral, feminine character
+- *spice:* orange for functions — warm spark against moody violet bg
+- *lagoon:* red (coral) for keywords, teal for functions, magenta for types
+  — warm/cool tension, three-temperature split
+
+The accent hex values matter, but *which token gets which color* is what
+users actually experience. A warm color on keywords feels bold and assertive;
+a cool color feels precise and technical.
+
+*** Warm-on-Cool Tension (advanced)
+
+Some of the most interesting themes create identity through *temperature
+contrast*: warm accent colors against a cool background (or vice versa).
+
+- *lagoon:* coral keywords + watermelon types on teal bg — "reef at dusk"
+- *tide:* gold/amber accents on indigo bg — "bioluminescent"
+- Contrast: *moss* uses all-warm (green bg + tan fg) — "forest floor"
+
+This works because the warm accents "glow" against the cool base. But:
+- Keep the bg itself low-saturation (it's the canvas, not the paint)
+- The warm accents should still be perceptually balanced (CIELAB L*)
+- Don't use warm AND cool in equal measure — one should dominate
+
+** 3. Semantic Mappings
+
+Map abstract roles to accent colors. This is what =doom-themes-base.el=
+uses to style ~800+ faces automatically.
+
+#+begin_example elisp
+(highlight      cyan)        ; Current match / hover
+(vertical-bar   base4)       ; Window divider
+(selection       base3)       ; Visual selection bg
+(builtin        green)       ; Built-in functions
+(comments       base5)       ; Comment text
+(doc-comments   (doom-lighten base5 0.15))
+(constants      violet)      ; Constants / enums
+(functions      cyan)        ; Function names
+(keywords       green)       ; Language keywords
+(methods        dark-cyan)   ; Method names
+(operators      base6)       ; Operators (+, -, =)
+(type           teal)        ; Type names
+(strings        yellow)      ; String literals
+(variables      fg)          ; Variable names
+(numbers        orange)      ; Numeric literals
+(region         selection)   ; Visual selection
+(error          red)
+(warning        yellow)
+(success        green)
+(vc-modified    yellow)      ; Git modified
+(vc-added       green)       ; Git added
+(vc-deleted     red)         ; Git deleted
+#+end_example
+
+* Face Overrides (required for full coverage)
+
+These go in the second argument of =def-doom-theme=.
+The base theme handles ~800 faces, but these need manual tuning.
+
+** Override Strategy: Full vs Minimal
+
+We tried two approaches:
+
+1. *Minimal (~38 overrides):* Trust doom-themes-base for most faces. Only
+   override font-lock, UI core, modeline, completion, org, and solaire.
+   - Pro: Less code, easier to maintain.
+   - Con: *Doom's default purple/magenta leaks through* in faces you didn't
+     override (rainbow delimiters, marginalia, dired, etc). This makes the
+     theme look inconsistent — you'll see random purples that don't belong.
+
+2. *Full (~95+ overrides):* Override every visible face category.
+   - Pro: Complete control. No color leaks. Theme looks intentional everywhere.
+   - Con: More code, more maintenance.
+
+*Verdict: Use full overrides.* The "minimal" approach sounds elegant but
+produces themes that look broken in real use. When a user opens magit, dired,
+or a completion popup and sees colors from a different palette, the theme
+loses trust. The extra 60 lines of code are worth it.
+
+The sections below marked *[MUST OVERRIDE]* will leak default colors if skipped.
+Sections marked *[BASE HANDLES]* are usually fine via semantic mappings but
+should still be verified visually.
+
+** Syntax (font-lock) [MUST OVERRIDE]
+
+Fine-tune token differentiation with weight/style/color.
+
+#+begin_example elisp
+((font-lock-keyword-face &override)       :foreground keywords :weight 'bold)
+((font-lock-builtin-face &override)       :foreground builtin :weight 'bold)
+((font-lock-function-name-face &override) :foreground functions :weight 'semibold)
+((font-lock-function-call-face &override) :foreground functions)
+((font-lock-type-face &override)          :foreground type :weight 'bold :slant 'italic)
+((font-lock-constant-face &override)      :foreground constants :weight 'semibold)
+((font-lock-variable-name-face &override) :foreground fg)
+((font-lock-variable-use-face &override)  :foreground fg-alt)
+((font-lock-string-face &override)        :foreground strings)
+((font-lock-number-face &override)        :foreground numbers :weight 'semibold)
+((font-lock-comment-face &override)       :foreground comments :slant 'italic)
+((font-lock-doc-face &override)           :foreground doc-comments :slant 'italic)
+((font-lock-operator-face &override)      :foreground operators)
+((font-lock-property-name-face &override) :foreground magenta)
+((font-lock-preprocessor-face &override)  :foreground blue :weight 'bold)
+((font-lock-warning-face &override)       :foreground red :weight 'bold)
+#+end_example
+
+** UI Core [MUST OVERRIDE]
+
+#+begin_example elisp
+;; Line numbers
+((line-number &override) :foreground base5)
+((line-number-current-line &override) :foreground cyan :weight 'bold)
+
+;; Cursor
+(cursor :background cyan)
+
+;; Current line highlight (hl-line-sticky-flag nil for active-buffer-only)
+(hl-line :background <between base3 and base4>)
+
+;; Visual selection
+(region :background base4)
+(highlight :background base4)
+(secondary-selection :background base2)
+
+;; Search
+(isearch :background green :foreground bg :weight 'bold)
+(lazy-highlight :background base5 :foreground cyan)
+(evil-ex-lazy-highlight :background base5 :foreground cyan)
+
+;; Links
+(link :foreground cyan :underline t)
+(link-visited :foreground blue :underline t)
+
+;; Tooltip
+(tooltip :background base2 :foreground fg)
+#+end_example
+
+** Modeline [MUST OVERRIDE]
+
+#+begin_example elisp
+(mode-line
+ :background modeline-bg :foreground modeline-fg
+ :overline base4
+ :box `(:line-width ,-modeline-pad :color ,modeline-bg))
+(mode-line-inactive
+ :background modeline-bg-inactive :foreground modeline-fg-alt
+ :overline base4
+ :box `(:line-width ,-modeline-pad :color ,modeline-bg-inactive))
+(mode-line-emphasis :foreground cyan)
+(doom-modeline-bar :background cyan)
+(doom-modeline-buffer-file :foreground fg :weight 'bold)
+#+end_example
+
+** Completion (Corfu + Orderless) [MUST OVERRIDE]
+
+#+begin_example elisp
+(corfu-default     :background base2 :foreground fg)
+(corfu-current     :background base5 :foreground cyan :weight 'bold)
+(corfu-bar         :background base5)
+(corfu-border      :background base4)
+(corfu-annotations :foreground base6)
+(corfu-deprecated  :foreground base5 :strike-through t)
+(completions-common-part    :foreground cyan :weight 'bold)
+(completions-first-difference :foreground green)
+(orderless-match-face-0 :foreground cyan :weight 'bold)
+(orderless-match-face-1 :foreground green :weight 'bold)
+(orderless-match-face-2 :foreground yellow)
+(orderless-match-face-3 :foreground blue)
+#+end_example
+
+** Vertico / Minibuffer [MUST OVERRIDE]
+
+#+begin_example elisp
+(vertico-current :background base4 :foreground cyan :weight 'bold)
+((minibuffer-prompt &override) :foreground green :weight 'bold)
+#+end_example
+
+** Which-key / Transient [MUST OVERRIDE]
+
+#+begin_example elisp
+(which-key-key-face :foreground cyan)
+(which-key-command-description-face :foreground fg)
+(which-key-group-description-face :foreground green)
+(transient-key :foreground cyan :weight 'bold)
+#+end_example
+
+** Treemacs / File Tree [MUST OVERRIDE]
+
+#+begin_example elisp
+(treemacs-root-face :foreground cyan :weight 'ultra-bold)
+(treemacs-directory-face :foreground fg)
+(treemacs-file-face :foreground fg-alt)
+(treemacs-git-modified-face :foreground yellow)
+(treemacs-git-added-face :foreground green)
+#+end_example
+
+** VTerm ANSI Colors [MUST OVERRIDE]
+
+Map the 8 ANSI colors to theme palette.
+Note: only affects apps using basic 16-color ANSI codes, NOT truecolor.
+
+#+begin_example elisp
+(vterm-color-black   :foreground base2   :background base4)
+(vterm-color-red     :foreground red     :background red)
+(vterm-color-green   :foreground green   :background green)
+(vterm-color-yellow  :foreground yellow  :background yellow)
+(vterm-color-blue    :foreground blue    :background blue)
+(vterm-color-magenta :foreground magenta :background magenta)
+(vterm-color-cyan    :foreground cyan    :background cyan)
+(vterm-color-white   :foreground fg      :background fg)
+#+end_example
+
+** Org Mode [MUST OVERRIDE]
+
+#+begin_example elisp
+(org-block            :background base3 :extend t)
+(org-block-begin-line :foreground base5 :slant 'italic :background base2)
+(org-block-end-line   :foreground base5 :slant 'italic :background base2)
+(org-quote            :background base3 :extend t :slant 'italic)
+(org-verse            :background base3 :extend t)
+(org-ellipsis         :underline nil :foreground base5)
+(org-hide             :foreground bg)
+#+end_example
+
+** Outline Headings [MUST OVERRIDE]
+
+#+begin_example elisp
+((outline-1 &override) :foreground cyan :weight 'ultra-bold)
+((outline-2 &override) :foreground green :weight 'bold)
+((outline-3 &override) :foreground blue)
+((outline-4 &override) :foreground teal)
+((outline-5 &override) :foreground dark-cyan)
+((outline-6 &override) :foreground dark-blue)
+#+end_example
+
+** Markdown [MUST OVERRIDE]
+
+#+begin_example elisp
+(markdown-markup-face :foreground base5)
+(markdown-header-face :inherit 'bold :foreground cyan)
+((markdown-code-face &override) :background (doom-lighten bg 0.03))
+#+end_example
+
+** CSS [MUST OVERRIDE]
+
+#+begin_example elisp
+(css-proprietary-property :foreground orange)
+(css-property             :foreground fg)
+(css-selector             :foreground cyan :weight 'bold)
+#+end_example
+
+** Goggles (change pulse) [MUST OVERRIDE]
+
+#+begin_example elisp
+(goggles-changed :background <yellow-tinted, L~17%>)
+(goggles-added   :background <green-tinted, L~17%>)
+(goggles-removed :background <red-tinted, L~17%>)
+#+end_example
+
+** Solaire [MUST OVERRIDE]
+
+#+begin_example elisp
+(solaire-mode-line-face
+ :inherit 'mode-line
+ :background modeline-bg-l
+ :box `(:line-width ,-modeline-pad :color ,modeline-bg-l))
+(solaire-mode-line-inactive-face
+ :inherit 'mode-line-inactive
+ :background modeline-bg-inactive-l
+ :box `(:line-width ,-modeline-pad :color ,modeline-bg-inactive-l))
+#+end_example
+
+** Org Agenda [MUST OVERRIDE]
+
+#+begin_example elisp
+;; Day headers
+(org-agenda-structure :foreground cyan :weight 'bold)
+(org-agenda-date :foreground fg :weight 'bold)
+(org-agenda-date-today :foreground cyan :weight 'ultra-bold)
+(org-agenda-date-weekend :foreground base6)
+(org-agenda-date-weekend-today :foreground cyan :weight 'bold)
+
+;; Items
+(org-agenda-done :foreground base5 :slant 'italic)
+(org-agenda-dimmed-todo-face :foreground base5)
+(org-agenda-current-time :foreground cyan :weight 'bold)
+(org-agenda-clocking :background base3 :weight 'bold)
+
+;; Scheduling
+(org-scheduled :foreground fg)
+(org-scheduled-today :foreground green :weight 'bold)
+(org-scheduled-previously :foreground orange)
+(org-upcoming-deadline :foreground red :weight 'bold)
+(org-upcoming-distant-deadline :foreground base6)
+(org-warning :foreground red :weight 'bold)
+
+;; Super-agenda headers
+(org-super-agenda-header :foreground cyan :weight 'bold)
+#+end_example
+
+** Org TODO / Tags / Properties [MUST OVERRIDE]
+
+#+begin_example elisp
+(org-todo :foreground green :weight 'bold)
+(org-done :foreground base5 :weight 'bold :strike-through t)
+(org-headline-done :foreground base5 :strike-through t)
+(org-priority :foreground orange :weight 'bold)
+(org-tag :foreground base6 :weight 'normal)
+(org-date :foreground blue :underline t)
+(org-special-keyword :foreground base6)
+(org-checkbox :foreground cyan :weight 'bold)
+(org-checkbox-statistics-todo :foreground cyan)
+(org-checkbox-statistics-done :foreground base5)
+(org-code :foreground orange :background base2)
+(org-verbatim :foreground green)
+(org-table :foreground blue)
+(org-formula :foreground orange)
+(org-drawer :foreground base6)
+(org-property-value :foreground base7)
+(org-link :foreground cyan :underline t)
+#+end_example
+
+** Mu4e (Email) [MUST OVERRIDE]
+
+29 faces total. The headers list is the most visible — make sure unread,
+replied, flagged, forwarded, trashed all look distinct from each other.
+
+#+begin_example elisp
+;; ── Headers list ──
+(mu4e-header-face :foreground fg-alt)         ; read messages (slightly muted fg)
+(mu4e-header-highlight-face :background base3 :weight 'bold)  ; cursor line
+(mu4e-header-marks-face :foreground orange)    ; flag/mark icons
+(mu4e-header-title-face :foreground cyan :weight 'bold)  ; column headers
+(mu4e-header-field-face :foreground base6)     ; field labels in headers
+
+;; ── Message states (each must be visually distinct!) ──
+(mu4e-unread-face :foreground ACCENT :weight 'bold)    ; unread = theme accent + bold (pops!)
+(mu4e-flagged-face :foreground red :weight 'bold)      ; flagged = urgent
+(mu4e-replied-face :foreground base6 :slant 'italic)   ; replied = faded + italic
+(mu4e-forwarded-face :foreground blue)                 ; forwarded = different hue
+(mu4e-draft-face :foreground yellow :weight 'bold)     ; draft = WIP indicator
+(mu4e-trashed-face :foreground base5 :strike-through t)  ; trashed = crossed out
+(mu4e-related-face :foreground base6)                  ; thread-related = dimmed
+
+;; ── Contacts and fields ──
+(mu4e-contact-face :foreground green)                  ; sender/recipient names
+(mu4e-header-key-face :foreground cyan :weight 'bold)  ; "From:", "To:", etc.
+(mu4e-header-value-face :foreground fg)                ; field values
+(mu4e-special-header-value-face :foreground orange)    ; special header values
+
+;; ── Message view ──
+(mu4e-compose-separator-face :foreground base4)        ; compose separator line
+(mu4e-link-face :foreground cyan :underline t)         ; clickable links
+(mu4e-url-number-face :foreground orange :weight 'bold)  ; [1], [2] URL numbers
+(mu4e-cited-1-face :foreground base7)                  ; citation level 1
+(mu4e-cited-2-face :foreground base6)                  ; citation level 2
+(mu4e-cited-3-face :foreground base5)                  ; citation level 3
+
+;; ── Thread and context ──
+(mu4e-thread-fold-face :foreground base5 :slant 'italic)  ; folded thread indicator
+(mu4e-context-face :foreground cyan :weight 'bold)     ; context name in modeline
+
+;; ── System UI ──
+(mu4e-modeline-face :foreground cyan)                  ; modeline indicator
+(mu4e-highlight-face :foreground cyan :weight 'bold)   ; highlighted text
+(mu4e-title-face :foreground cyan :weight 'bold)       ; title in main view
+(mu4e-footer-face :foreground base5)                   ; footer text
+(mu4e-ok-face :foreground green :weight 'bold)         ; success messages
+(mu4e-warning-face :foreground orange :weight 'bold)   ; warning messages
+(mu4e-system-face :foreground base6 :slant 'italic)    ; system info messages
+(mu4e-region-code :background base2)                   ; code regions in messages
+#+end_example
+
+** Magit / Diff [BASE HANDLES — verify visually]
+
+doom-themes-base styles magit using =vc-modified=, =vc-added=, =vc-deleted=
+semantic mappings. Usually looks correct without overrides. Override if the
+base result clashes with your palette.
+(magit-section-heading :foreground cyan :weight 'bold)
+(magit-section-highlight :background base3)
+(magit-diff-added :foreground green :background (doom-blend green bg 0.15))
+(magit-diff-added-highlight :foreground green :background (doom-blend green bg 0.25))
+(magit-diff-removed :foreground red :background (doom-blend red bg 0.15))
+(magit-diff-removed-highlight :foreground red :background (doom-blend red bg 0.25))
+(magit-diff-context-highlight :background base2)
+(magit-diff-hunk-heading :foreground blue :background base3)
+(magit-diff-hunk-heading-highlight :foreground blue :background base4 :weight 'bold)
+(magit-branch-local :foreground cyan :weight 'bold)
+(magit-branch-remote :foreground green :weight 'bold)
+(magit-hash :foreground base6)
+(magit-log-author :foreground orange)
+(magit-log-date :foreground blue)
+(diff-added :foreground green)
+(diff-removed :foreground red)
+(diff-header :foreground blue :weight 'bold)
+(diff-file-header :foreground cyan :weight 'bold)
+#+end_example
+
+** Dired [BASE HANDLES — verify visually]
+(dired-directory :foreground cyan :weight 'bold)
+(dired-symlink :foreground blue)
+(dired-ignored :foreground base5)
+(dired-flagged :foreground red :weight 'bold)
+(dired-marked :foreground orange :weight 'bold)
+(dired-perm-write :foreground green)
+#+end_example
+
+** Flycheck / Flymake [BASE HANDLES — verify visually]
+(flycheck-error :underline `(:style wave :color ,red))
+(flycheck-warning :underline `(:style wave :color ,yellow))
+(flycheck-info :underline `(:style wave :color ,green))
+(flymake-error :underline `(:style wave :color ,red))
+(flymake-warning :underline `(:style wave :color ,yellow))
+(flymake-note :underline `(:style wave :color ,green))
+#+end_example
+
+** Marginalia / Consult / Embark [BASE HANDLES — verify visually]
+(marginalia-documentation :foreground base6 :slant 'italic)
+(marginalia-key :foreground cyan :weight 'bold)
+(marginalia-file-name :foreground fg-alt)
+(marginalia-size :foreground base6)
+(marginalia-date :foreground blue)
+(marginalia-modified :foreground yellow)
+(consult-file :foreground fg-alt)
+(consult-preview-line :background base3)
+(embark-keybinding :foreground cyan :weight 'bold)
+(embark-target :foreground green :weight 'bold)
+#+end_example
+
+** Rainbow Delimiters [BASE HANDLES — verify visually]
+(rainbow-delimiters-depth-1-face :foreground cyan)
+(rainbow-delimiters-depth-2-face :foreground green)
+(rainbow-delimiters-depth-3-face :foreground blue)
+(rainbow-delimiters-depth-4-face :foreground teal)
+(rainbow-delimiters-depth-5-face :foreground yellow)
+(rainbow-delimiters-depth-6-face :foreground magenta)
+(rainbow-delimiters-depth-7-face :foreground dark-cyan)
+(rainbow-delimiters-depth-8-face :foreground orange)
+(rainbow-delimiters-depth-9-face :foreground violet)
+#+end_example
+
+* Theme Checklist
+
+When creating a new theme, verify:
+
+** Palette Design
+- [ ] Background ramp: 11 stops + fg + fg-alt, all HSL-documented
+- [ ] BG saturation is S8-15% (NOT higher — see Background Saturation section)
+- [ ] 12 accent colors with HSL + CIELAB L* comments
+- [ ] All accent CIELAB L* within a 5-8 unit band (verify at colorjs.io)
+- [ ] Semantic mappings complete (all 20+ variables)
+- [ ] Semantic mapping gives the theme identity (not just defaults)
+- [ ] Modeline variables (fg, fg-alt, bg, bg-l, bg-inactive, bg-inactive-l)
+
+** Must Override (~95 faces — these leak default colors if skipped)
+- [ ] Font-lock overrides (16 faces)
+- [ ] UI core (line numbers, cursor, hl-line, region, search, links, tooltip)
+- [ ] Modeline faces (with overline + box)
+- [ ] Completion faces (corfu, orderless, completions-common-part)
+- [ ] Vertico / minibuffer
+- [ ] Which-key / transient
+- [ ] Treemacs / file tree
+- [ ] VTerm ANSI colors (8 faces)
+- [ ] Org mode blocks/quotes
+- [ ] Outline headings (6 levels)
+- [ ] Org agenda (structure, dates, scheduling, super-agenda)
+- [ ] Org TODO / tags / properties
+- [ ] Mu4e (email headers, compose, cited)
+- [ ] Markdown
+- [ ] CSS
+- [ ] Goggles pulse colors (3 faces with distinct tints)
+- [ ] Solaire modeline
+
+** Verify Visually (base handles, but check for palette clashes)
+- [ ] Magit / diff (sections, hunks, branches)
+- [ ] Dired (directories, symlinks, flags)
+- [ ] Flycheck / Flymake (error, warning, info waves)
+- [ ] Marginalia / Consult / Embark
+- [ ] Rainbow delimiters (9 depth levels)
+
+** Final Testing
+- [ ] Open a real codebase and squint — does one color jump out?
+- [ ] Check org-agenda, mu4e, magit — not just code buffers
+- [ ] Switch between your theme and a reference (Everforest, Solarized)
+- [ ] Verify no purple/magenta leaking from doom defaults
+
+* Color Utilities
+
+Doom provides these transformation functions:
+
+- =(doom-darken COLOR AMOUNT)= — darken by 0.0-1.0
+- =(doom-lighten COLOR AMOUNT)= — lighten by 0.0-1.0
+- =(doom-blend COLOR1 COLOR2 AMOUNT)= — blend two colors (0.0 = COLOR2, 1.0 = COLOR1)
+
+Use these for derived colors to maintain consistency.
+
+* File Structure
+
+#+begin_example
+~/.config/doom/
+  themes/
+    THEME-FRAMEWORK.org      ← this file
+    reef-theme.el            ← base theme
+    reef-deep-theme.el       ← variant
+    matrix-black-theme.el    ← monochrome example
+    ...
+#+end_example
+
+All themes live in =themes/= and are auto-discovered via:
+#+begin_example elisp
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "themes" doom-user-dir))
+#+end_example

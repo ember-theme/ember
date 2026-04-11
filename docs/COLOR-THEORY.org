@@ -1,0 +1,192 @@
+#+title: Color Theory for Theme Design
+#+author: Hossam Saraya
+#+property: header-args :tangle no
+
+Lessons from analyzing Everforest, Solarized, Nord, Catppuccin, and Gruvbox.
+
+* Rule 1: Background Tint = Theme Identity
+
+Every great theme tints the background toward one hue. Pure neutral grey is bland.
+
+| Theme       | BG Hex    | Hue   | Character          |
+|-------------+-----------+-------+--------------------|
+| Everforest  | =#2d353b= | H180  | green-grey, forest |
+| Solarized   | =#002b36= | H192  | dark teal          |
+| Nord        | =#2e3440= | H220  | blue-grey, arctic  |
+| Catppuccin  | =#1e1e2e= | H240  | purple-blue, warm  |
+| Gruvbox     | =#282828= | H30   | warm brown, retro  |
+
+*Takeaway:* Pick a hue. Tint everything toward it. The hue IS the theme.
+
+* Rule 2: Foreground is Never Pure White
+
+All ergonomic themes use tinted, softened foreground. Pure white (#ffffff)
+causes eye strain on dark backgrounds.
+
+| Theme      | FG Hex    | Lightness | Tint        |
+|------------+-----------+-----------+-------------|
+| Everforest | =#d3c6aa= | 74%       | warm tan    |
+| Solarized  | =#839496= | 58%       | blue-grey   |
+| Nord       | =#d8dee9= | 87%       | cool blue   |
+| Catppuccin | =#cdd6f4= | 88%       | lavender    |
+| Gruvbox    | =#ebdbb2= | 81%       | cream       |
+
+*Target:* FG lightness 58-88%, tinted toward the theme's hue.
+Solarized is notably dim (58%) — this is intentional for low contrast.
+
+* Rule 3: Equal Perceptual Brightness Across Accents
+
+This is the biggest insight from Solarized. All 8 accent colors sit at the
+*same CIELAB lightness (~L*50)*. Everforest and Nord achieve this intuitively.
+
+Why this matters:
+- No single color screams louder than another
+- Your eye doesn't jump to red or yellow first
+- Code looks balanced, not like a Christmas tree
+- You can scan structure without being pulled to specific tokens
+
+*Target:* All accents at CIELAB L*45-60 for dark themes.
+
+How to verify: convert each accent to CIELAB and check the L* values.
+Online tool: https://colorjs.io/apps/convert/
+
+* Rule 4: Moderate Saturation
+
+| Theme       | Typical Accent Saturation | Strategy              |
+|-------------+---------------------------+-----------------------|
+| Everforest  | 30-45%                    | Very muted, natural   |
+| Solarized   | 60-80%                    | High sat, low L*      |
+| Nord        | 25-40%                    | Very muted, pastel    |
+| Catppuccin  | 50-70%                    | Pastel (high L + mod S) |
+| Gruvbox     | 60-80%                    | High sat, warm-shifted |
+
+Two strategies for avoiding harshness:
+1. *Low saturation* (Everforest, Nord) — colors are muted/dusty
+2. *High saturation + low lightness* (Solarized) — vivid but dark
+3. *High saturation + high lightness* (Catppuccin) — pastel effect
+
+Avoid: high saturation + high lightness + dark background = neon, eye strain.
+
+*Target:* Saturation under 60%, or compensate with adjusted lightness.
+
+* Rule 5: Smooth Background Ramp (8-13 steps)
+
+All themes define a gradient from darkest to lightest, sharing the same hue.
+This ramp is used for UI layering (popups, modeline, hl-line, etc.).
+
+| Theme      | Steps | Range                               |
+|------------+-------+-------------------------------------|
+| Catppuccin | 13    | Crust → Mantle → Base → Surface → Overlay → Subtext → Text |
+| Gruvbox    | 8     | bg → bg1-4 → fg4-1 → fg            |
+| Solarized  | 8     | base03 → base02 → ... → base3      |
+| Nord       | 7     | nord0-3 (dark) + nord4-6 (light)    |
+| Everforest | 8     | bg_dim → bg → bg1-5 → fg           |
+
+More steps = smoother layering, fewer visible jumps between UI elements.
+
+*Target:* At least 8 stops, all sharing the theme hue.
+
+* Rule 6: Contrast Ratio (BG to FG)
+
+| Theme      | Approx Ratio | Feel         |
+|------------+--------------+--------------|
+| Solarized  | ~7:1         | low, relaxed |
+| Everforest | ~8:1         | comfortable  |
+| Nord       | ~9:1         | moderate     |
+| Catppuccin | ~10:1        | moderate     |
+| Gruvbox    | ~11:1        | crisp        |
+
+WCAG AA requires 4.5:1 minimum. Most editors aim for 7-11:1.
+
+*Target:* 7-10:1 for comfortable long-session reading.
+Pure black bg (#000000) with bright fg pushes ratio to 12:1+ — harsh.
+
+* Rule 7: Warm vs Cool — Pick One and Commit
+
+- *Warm:* Gruvbox, Everforest (browns, tans, olive greens)
+- *Cool:* Nord, Solarized (blues, teals, blue-greys)
+- *Mixed warm:* Catppuccin (purple base + pastel accents)
+
+*Rule:* Don't mix warm and cool randomly. Your accent hue range should
+span ~120° of the color wheel, not 360°.
+
+** Hue Distribution Examples
+
+Everforest accents span H0-H340 (full wheel) BUT all at very low saturation,
+so the variation is subtle. With high saturation, a full-wheel spread looks
+chaotic.
+
+Nord accents cluster around H0-H200 (warm reds to cool blues), skipping
+the magenta/violet range almost entirely.
+
+Gruvbox accents all shift warm — even the "blue" (#83a598) has a teal/green
+tint, not a pure blue.
+
+* Rule 8: Reference Palettes
+
+** Everforest Dark (the gold standard for eye comfort)
+#+begin_example
+bg:      #2d353b    fg:     #d3c6aa
+bg-alt:  #343f44    fg-alt: #9da9a0
+red:     #e67e80    orange: #e69875
+yellow:  #dbbc7f    green:  #a7c080
+blue:    #7fbbb3    cyan:   #83c092
+purple:  #d699b6
+#+end_example
+
+** Solarized Dark (scientific precision)
+#+begin_example
+bg:      #002b36    fg:     #839496
+bg-alt:  #073642    fg-alt: #93a1a1
+red:     #dc322f    orange: #cb4b16
+yellow:  #b58900    green:  #859900
+blue:    #268bd2    cyan:   #2aa198
+magenta: #d33682    violet: #6c71c4
+#+end_example
+
+** Nord (arctic minimalism)
+#+begin_example
+bg:      #2e3440    fg:     #d8dee9
+bg-alt:  #3b4252    fg-alt: #e5e9f0
+red:     #bf616a    orange: #d08770
+yellow:  #ebcb8b    green:  #a3be8c
+blue:    #88c0d0    cyan:   #8fbcbb
+purple:  #b48ead    deep:   #5e81ac
+#+end_example
+
+** Catppuccin Mocha (pastel warmth)
+#+begin_example
+bg:      #1e1e2e    fg:     #cdd6f4
+bg-alt:  #181825    fg-alt: #bac2de
+red:     #f38ba8    orange: #fab387
+yellow:  #f9e2af    green:  #a6e3a1
+blue:    #89b4fa    cyan:   #94e2d5
+purple:  #cba6f7    pink:   #f5c2e7
+#+end_example
+
+** Gruvbox Dark (retro warmth)
+#+begin_example
+bg:      #282828    fg:     #ebdbb2
+bg-alt:  #3c3836    fg-alt: #d5c4a1
+red:     #fb4934    orange: #fe8019
+yellow:  #fabd2f    green:  #b8bb26
+blue:    #83a598    cyan:   #8ec07c
+purple:  #d3869b
+#+end_example
+
+* Applying to Our Themes
+
+** Matrix-Black Issues
+1. Accent saturation too high (70-90%) — should be 40-60%
+2. Pure black bg is a style choice but pushes contrast to 12:1+
+3. Accent luminance is uneven — green/cyan dominate visually
+4. Foreground is OK (#b8ddb0, L78%) but could be warmer
+
+** Suggested Approach for New Palettes
+1. Pick a hue identity (green for matrix, teal for reef, rose for blossom)
+2. Build the bg ramp: 8+ stops all at that hue, S10-25%, L2-80%
+3. Set fg at the same hue, S20-40%, L75-85%
+4. Choose accents: convert each to CIELAB, adjust until L* values match
+5. Test: open a real codebase and squint — if one color jumps out, it's
+   too bright or too saturated relative to the others
+6. Test in org-agenda, mu4e, magit — not just code buffers

@@ -1,0 +1,71 @@
+# dlock-ember
+
+A warm, low-contrast Doom Emacs theme built on graphite tones with a single coral accent.
+
+![dlock-ember](screenshots/ember.png)
+
+## Philosophy
+
+Nearly monochrome. One color does all the talking.
+
+The background is warm graphite (`#1c1b19`). Text is ivory (`#d8d0c0`). Every accent — olive greens, steel blues, dusty mauves — stays desaturated and quiet. Then coral (`#e08060`) lights up keywords, the cursor, the modeline bar, and search highlights. One ember in the ash.
+
+## Variants
+
+- **dlock-ember** — Dark graphite, L10% background
+- **dlock-ember-soft** — Lifted graphite, L13% background, same accents
+- **dlock-ember-light** — Warm ivory, L95% background, darkened accents for contrast
+
+## Installation
+
+### Doom Emacs
+
+Add to `packages.el`:
+
+```elisp
+(package! dlock-ember-theme
+  :recipe (:host github :repo "daedlock/dlock-ember-theme"))
+```
+
+Add to `config.el`:
+
+```elisp
+(setq doom-theme 'dlock-ember)
+;; or
+(setq doom-theme 'dlock-ember-soft)
+;; or
+(setq doom-theme 'dlock-ember-light)
+```
+
+Run `doom sync` and restart.
+
+### Manual
+
+Clone this repo into your Doom themes directory:
+
+```sh
+git clone https://github.com/daedlock/dlock-ember-theme ~/.config/doom/themes/dlock-ember
+```
+
+## Palette
+
+| Role | Hex | Description |
+|------|-----|-------------|
+| bg | `#1c1b19` | Warm graphite |
+| fg | `#d8d0c0` | Ivory mist |
+| coral | `#e08060` | Hero accent — keywords, cursor, links |
+| orange | `#c09058` | Constants, properties |
+| gold | `#c8b468` | Functions, types |
+| olive | `#8a9868` | Strings |
+| steel | `#7890a0` | Muted blue |
+| sage | `#80a090` | Methods |
+| mauve | `#988090` | Violet, faint |
+| rose | `#b07878` | Magenta, dusty |
+
+## Face Coverage
+
+Full coverage for: font-lock, UI (modeline, line numbers, cursor), completion (corfu, vertico, orderless), org-mode (headings, agenda, TODO, blocks), markdown, treemacs, which-key, vterm ANSI, mu4e, goggles, LSP UI, solaire, CSS, isearch, and evil.
+
+## License
+
+MIT

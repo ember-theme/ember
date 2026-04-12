@@ -99,6 +99,8 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 | **VS Code** | Coming soon | [ember-theme/vscode](https://github.com/ember-theme/vscode) |
 | **Zed** | Coming soon | [ember-theme/zed](https://github.com/ember-theme/zed) |
 | **iTerm2** | Coming soon | [ember-theme/iterm](https://github.com/ember-theme/iterm) |
+| **Alacritty** | Coming soon | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) |
+| **WezTerm** | Coming soon | [ember-theme/wezterm](https://github.com/ember-theme/wezterm) |
 
 Want to build a port? Use [`palette.json`](palette.json) as your source of truth and open an issue.
 

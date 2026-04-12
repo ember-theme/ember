@@ -90,17 +90,22 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 
 ## Ports
 
-| Editor | Status | Repository |
-|--------|--------|------------|
-| **Emacs** (Doom) | Available | [ember-theme/emacs](https://github.com/ember-theme/emacs) |
-| **Neovim** | Available | [ember-theme/nvim](https://github.com/ember-theme/nvim) |
-| **Ghostty** | Available | [ember-theme/ghostty](https://github.com/ember-theme/ghostty) |
-| **Kitty** | Available | [ember-theme/kitty](https://github.com/ember-theme/kitty) |
-| **VS Code** | Coming soon | [ember-theme/vscode](https://github.com/ember-theme/vscode) |
-| **Zed** | Coming soon | [ember-theme/zed](https://github.com/ember-theme/zed) |
-| **iTerm2** | Coming soon | [ember-theme/iterm](https://github.com/ember-theme/iterm) |
-| **Alacritty** | Coming soon | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) |
-| **WezTerm** | Coming soon | [ember-theme/wezterm](https://github.com/ember-theme/wezterm) |
+| Port | Repository | Status |
+|------|------------|--------|
+| **Emacs** (Doom) | [ember-theme/emacs](https://github.com/ember-theme/emacs) | :white_check_mark: Available |
+| **Neovim** | [ember-theme/nvim](https://github.com/ember-theme/nvim) | :white_check_mark: Available |
+| **Ghostty** | [ember-theme/ghostty](https://github.com/ember-theme/ghostty) | :white_check_mark: Available |
+| **Kitty** | [ember-theme/kitty](https://github.com/ember-theme/kitty) | :white_check_mark: Available |
+
+### Coming soon
+
+| Port | Repository |
+|------|------------|
+| VS Code | [ember-theme/vscode](https://github.com/ember-theme/vscode) |
+| Zed | [ember-theme/zed](https://github.com/ember-theme/zed) |
+| iTerm2 | [ember-theme/iterm](https://github.com/ember-theme/iterm) |
+| Alacritty | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) |
+| WezTerm | [ember-theme/wezterm](https://github.com/ember-theme/wezterm) |
 
 Want to build a port? Use [`palette.json`](palette.json) as your source of truth and open an issue.
 

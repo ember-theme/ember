@@ -93,7 +93,7 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 | Editor | Status | Repository |
 |--------|--------|------------|
 | **Emacs** (Doom) | Available | [ember-theme/emacs](https://github.com/ember-theme/emacs) |
-| **Neovim** | Coming soon | — |
+| **Neovim** | Available | [ember-theme/nvim](https://github.com/ember-theme/nvim) |
 | **VS Code** | Coming soon | — |
 | **Terminals** | Coming soon | — |
 

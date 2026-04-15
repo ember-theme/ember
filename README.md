@@ -94,12 +94,12 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 |------|------------|--------|
 | **Emacs** (Doom) | [ember-theme/emacs](https://github.com/ember-theme/emacs) | :white_check_mark: Available |
 | **Neovim** | [ember-theme/nvim](https://github.com/ember-theme/nvim) | :white_check_mark: Available |
+| **Ghostty** | [ember-theme/ghostty](https://github.com/ember-theme/ghostty) | :white_check_mark: Available |
 
 ### Coming soon
 
 | Port | Repository |
 |------|------------|
-| Ghostty | [ember-theme/ghostty](https://github.com/ember-theme/ghostty) |
 | Kitty | [ember-theme/kitty](https://github.com/ember-theme/kitty) |
 | VS Code | [ember-theme/vscode](https://github.com/ember-theme/vscode) |
 | Zed | [ember-theme/zed](https://github.com/ember-theme/zed) |

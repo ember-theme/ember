@@ -106,6 +106,7 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 | iTerm2 | [ember-theme/iterm](https://github.com/ember-theme/iterm) |
 | Alacritty | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) |
 | WezTerm | [ember-theme/wezterm](https://github.com/ember-theme/wezterm) |
+| IntelliJ | [ember-theme/intellij](https://github.com/ember-theme/intellij) |
 
 Want to build a port? Use [`palette.json`](palette.json) as your source of truth and open an issue.
 

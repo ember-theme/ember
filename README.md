@@ -96,15 +96,15 @@ The full palette definition (all variants, hex/HSL) is available as [`palette.js
 | **Neovim** | [ember-theme/nvim](https://github.com/ember-theme/nvim) | :white_check_mark: Available |
 | **Ghostty** | [ember-theme/ghostty](https://github.com/ember-theme/ghostty) | :white_check_mark: Available |
 | **VS Code** | [ember-theme/vscode](https://github.com/ember-theme/vscode) | :white_check_mark: Available |
+| **Alacritty** | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) | :white_check_mark: Available |
+| **Kitty** | [ember-theme/kitty](https://github.com/ember-theme/kitty) | :white_check_mark: Available |
 
 ### Coming soon
 
 | Port | Repository |
 |------|------------|
-| Kitty | [ember-theme/kitty](https://github.com/ember-theme/kitty) |
 | Zed | [ember-theme/zed](https://github.com/ember-theme/zed) |
 | iTerm2 | [ember-theme/iterm](https://github.com/ember-theme/iterm) |
-| Alacritty | [ember-theme/alacritty](https://github.com/ember-theme/alacritty) |
 | WezTerm | [ember-theme/wezterm](https://github.com/ember-theme/wezterm) |
 | IntelliJ | [ember-theme/intellij](https://github.com/ember-theme/intellij) |
 
